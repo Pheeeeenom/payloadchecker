@@ -26,7 +26,7 @@ namespace payloadchecker
 
             if (ofd.ShowDialog() == DialogResult.OK)
             {
-                ofd.Dispose();
+                
                 FileStream stream = File.OpenRead(ofd.FileName);
 
                 byte[] BOOT0 = new byte[0xFDC0];
@@ -57,6 +57,7 @@ namespace payloadchecker
                     MessageBox.Show("Unknown Payload. Please contact the developer");
 
                 }
+		ofd.Dispose();
             }
          
             
