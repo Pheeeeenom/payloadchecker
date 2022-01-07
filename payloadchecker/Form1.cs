@@ -18,7 +18,7 @@ namespace payloadchecker
         {
             InitializeComponent();
         }
-        uint payload_v1 = 0xd90f1907, payload_v2 = 0x3d36ffac, gateway_payload = 0x3b25Bab4, payload_v2_improved_sd_BOOT2OFW = 0xf67893ad;
+        uint payload_v1 = 0xd90f1907, payload_v2 = 0x3d36ffac, gateway_payload = 0x3b25Bab4, payload_v2_improved_sd_BOOT2OFW = 0xf67893ad, stock_oled = 0x8bdd4e3e;
         private void button1_Click(object sender, EventArgs e)
         {
 	
@@ -51,6 +51,10 @@ namespace payloadchecker
                 else if (crc32BOOT0 == payload_v2_improved_sd_BOOT2OFW)
                 {
                     MessageBox.Show("Improved Spacecraft v2 with better SD card compatibility/BOOT2OFW functionality\nYou can use this chip on an OLED");
+                }
+                else if (crc32BOOT0 == stock_oled)
+                {
+                    MessageBox.Show("Spacecraft v2 on stock OLED chip.\nYou can use this chip on an OLED");
                 }
                 else
                 {
