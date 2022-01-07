@@ -166,3 +166,6 @@ To point it out, Spacecraft v1 sets some pins to 5V that shouldn't be set to 5V 
 ## So...what's this do?
 
 This reads the payload data off of BOOT0 to determine the version of Spacecraft you are running. If you happened to install the chip into an OLED and it reads Spacecraft 0.1.0, take it out immediately or risk damaging your OLED and possibly kill it. I've already seen plenty of dead OLEDs due to the Chinese not using the latest Spacecraft release.
+
+## Usage
+Dump your BOOT0/1 immediately and open the application on a PC then select your BOOT0. 
