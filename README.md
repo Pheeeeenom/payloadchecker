@@ -79,7 +79,7 @@ Spacecraft v1 sets the following up:
     /* Enable Backlight EN. */
     gpio_write(GPIO_LCD_BL_EN, GPIO_LEVEL_HIGH);
 ```
-
+Spacecraft v2 sets up the following:
 ```cpp
     int aula = ((fuse_get_reserved_odm(4) & 0xF0000) >> 16) == 4;
 
