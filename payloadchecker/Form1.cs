@@ -19,6 +19,9 @@ namespace payloadchecker
             InitializeComponent();
         }
         uint payload_v1 = 0xd90f1907, payload_v2 = 0x3d36ffac, gateway_payload = 0x3b25Bab4, payload_v2_improved_sd_BOOT2OFW = 0xf67893ad, stock_oled = 0x8bdd4e3e, hwliteg3 = 0x13e8eea5;
+
+        uint spacecraftv1 = 0x5104d6f4, spacecraftv2 = 0x5074125e;
+        uint spacecraftv1_len = 0xF9C0, spacecraftv2_len = 0xFC60;
         private void button1_Click(object sender, EventArgs e)
         {
 	
@@ -28,48 +31,40 @@ namespace payloadchecker
             {
                 
                 FileStream stream = File.OpenRead(ofd.FileName);
-
-                byte[] BOOT0 = new byte[0xFDC0];
-
+                #region spacecraft v1 check
+                byte[] BOOT0 = new byte[0xF9C0];
+                
                 stream.Position = 0x3F0000;
-                stream.Read(BOOT0, 0, 0xFDC0);
+                stream.Read(BOOT0, 0, 0xF9C0);
 
                 uint crc32BOOT0 = Crc32Algorithm.Compute(BOOT0);
 
-                if (crc32BOOT0 == payload_v1)
+                if (crc32BOOT0 == spacecraftv1)
                 {
-                    MessageBox.Show("Spacecraft 0.1.0 Release\nDo not use this chip on an OLED");
+                    MessageBox.Show("Do NOT use on an OLED", "");
                 }
-                else if (crc32BOOT0 == payload_v2)
-                {
-                    MessageBox.Show("Spacecraft 0.2.0 Release\nYou can use this chip on an OLED");
-                }
-                else if (crc32BOOT0 == gateway_payload)
-                {
-                    MessageBox.Show("Original TX Payload. Update your chip to Spacecraft v2 before you use it on an OLED");
-                }
-                else if (crc32BOOT0 == payload_v2_improved_sd_BOOT2OFW)
-                {
-                    MessageBox.Show("Improved Spacecraft v2 with better SD card compatibility/BOOT2OFW functionality\nYou can use this chip on an OLED");
-                }
-                else if (crc32BOOT0 == stock_oled)
-                {
-                    MessageBox.Show("Spacecraft v2 on stock OLED chip.\nYou can use this chip on an OLED");
-                }
-                else if (crc32BOOT0 == hwliteg3)
-                {
-                    MessageBox.Show("HWFLY Gen3 with Spacecraft v2.\nYou can use this chip on an OLED");
-                }
-                else
-                {
-                    MessageBox.Show("Unknown Payload. Please contact the developer");
+                #endregion
+                #region spacecraft v2 check
+                byte[] BOOT0_2nd = new byte[0xFC60];
 
+                stream.Position = 0x3F0000;
+                stream.Read(BOOT0_2nd, 0, 0xFC60);
+
+                uint crc32BOOT0_ = Crc32Algorithm.Compute(BOOT0_2nd);
+
+                if (crc32BOOT0_ == spacecraftv2)
+                {
+                    MessageBox.Show("Do use on an OLED", "");
                 }
-		ofd.Dispose();
+                #endregion
+
+                if((crc32BOOT0 != spacecraftv1) &&(crc32BOOT0_ != spacecraftv2))
+                {
+                    MessageBox.Show("Unknown Payload/SX Payload?", "");
+                }
+
+                ofd.Dispose();
             }
-         
-            
-
          
         }
 
